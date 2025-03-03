@@ -64,7 +64,7 @@ class DES:
         """This function converts a string of bytes into a list of bits"""
         result = []
         for byte in byte_string:
-            for bit in [7,6,5,4,3,2,1,0]:
+            for bit in range(7,-1,-1): #iterate through 8 bits of byte
                 mask = 1 << bit
                 if int(byte) & mask > 0:
                     result.append(1)
