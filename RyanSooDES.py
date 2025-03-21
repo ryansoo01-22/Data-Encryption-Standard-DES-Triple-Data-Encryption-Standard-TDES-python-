@@ -1,5 +1,5 @@
 #RYAN SOO CSC 428 DES IMPLEMENTATION
-# 32-bit to 48-bit
+#32-bit to 48-bit
 
 class DES:
     key = ""
@@ -166,6 +166,7 @@ class DES:
         return block
 
     def decrypt(self, ciphertext, key=""):
+        '''This function decrypts a DES Encrypted body of text'''
         key = self.key
         mode = self.mode
         IV = self.IV
@@ -419,6 +420,9 @@ class DES:
         fres = [1,0,0,0,0,0,1,1,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,1,1,1,1,1,0]
         fsubkey = [0,1,1,0,1,1,1,1,1,0,1,0,1,1,0,0,0,0,0,1,1,0,1,1,1,0,1,1,1,0,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,1,0]
     #    res = encrypt(message, b"computer")
+        '''Below are unit tests run for each part of the DES algorithm. By making a unit test for each part and making sure they pass, it ensures that when it is all put together 
+        it should work as intended without any problems. I believe that testing should be done during development instead of at the end as it will speed up development time and things
+        will be smoother during the development of an application.'''
         assert self._add_padding(course_no_pad) == course_with_pad, "course add padding"
         assert self._add_padding(lastname_no_pad) == lastname_with_pad, "lastname add padding"
         assert self._add_padding(FILastname_no_pad) == FILastname_with_pad, "FILastname add padding"
@@ -461,6 +465,9 @@ class DES:
         """Resets IV to original value to start a new encryption or decryption.
         This function is only used for CBC and OFB modes."""
         self.IV = self.originalIV
+
+#RYAN SOO CSC 428 TDES IMPLEMENTATION
+#TDES is the DES algorithm ran 3 times to make a single algorithm.
 
 class TDES(DES):
     _EXPAND = [31,  0,  1,  2,  3,  4,  3,  4,
@@ -669,13 +676,19 @@ if __name__ == "__main__":
 
     TDESECB = TDES(secret_key1)
     decrypted = TDESECB.decrypt(ciphertext1)
+    print("TDES ECB ENCRYPTED: \n", ciphertext1)
+    print("\n")
     print("TDES ECB DECRYPTED: \n", decrypted)
     print("\n")
     TDESCBC = TDES(secret_key2, "CBC", initvector2)
     CBCdecrypted = TDESCBC.decrypt(ciphertext2)
+    print("TDES CBC ENCRYPTED: \n", ciphertext2)
+    print("\n")
     print("TDES CBC DECRYPTED: ", CBCdecrypted)
     print("\n")
     TDESOFB = TDES(secret_key3, "OFB", initvector3)
     OFBdecrypted = TDESOFB.decrypt(ciphertext3)
+    print("TDES OFB ENCRYPTED: \n", ciphertext3)
+    print("\n")
     print("TDES OFB DECRYPTED: ", OFBdecrypted)
     print("\n")
